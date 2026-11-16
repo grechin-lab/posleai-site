@@ -1,10 +1,10 @@
 {{ define "main" }}
-<h1>{{ site.Title }}</h1>
+<h1>{{ site.Title }}</h1>{{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
 {{ .Content }}
 <h2>Последние статьи</h2>
 <ul class="list">
 {{ range first 10 (where site.RegularPages "Section" "articles").ByDate.Reverse }}
-<li><a href="{{ .RelPermalink }}">{{ .Title }}</a><div class="muted">{{ .Date.Format "02.01.2006" }}{{ with .Params.author }} · {{ . }}{{ end }}</div>{{ with .Description }}<p>{{ . }}</p>{{ end }}</li>
+<li><a href="{{ .RelPermalink }}">{{ .Title }}</a><div class="meta">{{ .Date.Format "02.01.2006" }}{{ with .Params.author }} · {{ . }}{{ end }}</div>{{ with .Description }}<p>{{ . }}</p>{{ end }}</li>
 {{ else }}<li class="muted">Статей пока нет.</li>{{ end }}
 </ul>
 {{ end }}

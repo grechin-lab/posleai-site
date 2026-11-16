@@ -1,3 +1,4 @@
+{{- $c := partial "md-clean.html" . -}}
 # {{ .Title }}
 
 {{ with .Description }}> {{ . }}
@@ -7,4 +8,4 @@
 {{ with .Params.author }}- Автор: {{ . }}
 {{ end }}{{ with .Params.tags }}- Теги: {{ delimit . ", " }}
 {{ end }}
-{{ .RawContent }}
+{{ $c }}

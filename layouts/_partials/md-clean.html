@@ -1,0 +1,9 @@
+{{- $c := .RawContent -}}
+{{- $c = replaceRE `\{\{<\s*embed\s+src="/?([^"]+)"[^>]*>\}\}` (printf "Интерактивный отчёт: %s$1" site.BaseURL) $c -}}
+{{- $c = replaceRE `\{\{<\s*chart\s+title="([^"]*)"[^>]*>\}\}` "**$1:**" $c -}}
+{{- $c = replaceRE `\{\{<\s*(tiles|note)\s*>\}\}` "" $c -}}
+{{- $c = replaceRE `\{\{<\s*/\s*(tiles|chart|note)\s*>\}\}` "" $c -}}
+{{- $c = replaceRE `(?m)^([^|\n#>-][^|\n]*?)\s*\|\s*([^|\n]+?)\s*\|\s*([^|\n]+?)\s*$` "- $1: $2 ($3)" $c -}}
+{{- $c = replaceRE `(?m)^([^|\n#>-][^|\n]*?)\s*\|\s*([^|\n]+?)\s*$` "- $1: $2" $c -}}
+{{- $c = replaceRE `\]\(/` (printf "](%s" site.BaseURL) $c -}}
+{{- return $c -}}

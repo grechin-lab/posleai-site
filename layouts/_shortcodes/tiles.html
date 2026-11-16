@@ -1,0 +1,11 @@
+{{- /* Плитки с ключевыми цифрами. В статье:
+{{< tiles >}}
+Компаний | 113 736 | выручка за 2025
+Ниш | 159 | весь каталог
+{{< /tiles >}}
+Каждая строка: подпись | число | пояснение (необязательно) */ -}}
+<div class="tiles">
+{{- range split (trim .Inner "\n ") "\n" }}{{ $p := split . "|" }}{{ if ge (len $p) 2 }}
+<div class="tile"><div class="k">{{ index $p 0 | strings.TrimSpace }}</div><div class="v">{{ index $p 1 | strings.TrimSpace }}</div>{{ if ge (len $p) 3 }}<div class="s">{{ index $p 2 | strings.TrimSpace }}</div>{{ end }}</div>
+{{- end }}{{ end }}
+</div>

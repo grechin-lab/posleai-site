@@ -1,0 +1,5 @@
+{{- /* Встраивание интерактивного отчёта: {{< embed src="/reports/x/" height="1400" title="..." >}} */ -}}
+<figure class="wide">
+<iframe src="{{ .Get "src" }}" title="{{ .Get "title" | default "Интерактивный отчёт" }}" loading="lazy" style="width:100%;height:{{ .Get "height" | default "1200" }}px;border:1px solid var(--line);border-radius:8px;background:var(--surface)"></iframe>
+<figcaption><a href="{{ .Get "src" }}" target="_blank" rel="noopener">Открыть отчёт на весь экран ↗</a>{{ with .Get "data" }} · <a href="{{ . }}">скачать данные (CSV)</a>{{ end }}</figcaption>
+</figure>

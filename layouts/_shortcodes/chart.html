@@ -1,0 +1,14 @@
+{{- /* Столбчатый график без JS-библиотек. В статье:
+{{< chart title="Штат по нишам" caption="Источник: ФНС, 2025" >}}
+Управление МКД | 294072
+Аудит и бухгалтерия | 73763
+{{< /chart >}} */ -}}
+{{- $rows := slice -}}{{- $max := 0.0 -}}
+{{- range split (trim .Inner "\n ") "\n" }}{{ $p := split . "|" }}{{ if eq (len $p) 2 }}{{ $v := float (replace (index $p 1 | strings.TrimSpace) " " "") }}{{ $rows = $rows | append (dict "l" (index $p 0 | strings.TrimSpace) "v" $v) }}{{ if gt $v $max }}{{ $max = $v }}{{ end }}{{ end }}{{ end -}}
+<figure class="wide"><div class="card">
+{{ with .Get "title" }}<div style="font-weight:600;margin-bottom:10px">{{ . }}</div>{{ end }}
+{{ range $rows }}<div style="display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:10px;align-items:center;font-size:13.5px;margin:4px 0">
+<div style="color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="{{ .l }}">{{ .l }}</div>
+<div style="display:flex;align-items:center;gap:8px"><div style="height:14px;border-radius:3px;background:var(--accent);width:{{ if gt $max 0.0 }}{{ math.Round (mul (div .v $max) 100) }}{{ else }}0{{ end }}%"></div><span style="font-variant-numeric:tabular-nums;white-space:nowrap">{{ lang.FormatNumberCustom 0 .v }}</span></div>
+</div>{{ end }}
+</div>{{ with .Get "caption" }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>

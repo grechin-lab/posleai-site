@@ -1,8 +1,13 @@
 {{ define "main" }}
-<article>
+<article class="post">
+<header>
 <h1>{{ .Title }}</h1>
-{{ if eq .Section "articles" }}<div class="muted">{{ .Date.Format "02.01.2006" }}{{ with .Params.author }} · {{ . }}{{ end }}{{ with .Params.tags }} · {{ delimit . ", " }}{{ end }}</div>{{ end }}
-{{ with .Params.image }}<p><img src="{{ . }}" alt="{{ $.Title }}"></p>{{ end }}
+{{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+{{ if eq .Section "articles" }}<div class="meta">{{ .Date.Format "02.01.2006" }}{{ with .Params.author }} · {{ . }}{{ end }}{{ with .Params.tags }} · {{ delimit . ", " }}{{ end }} · {{ .ReadingTime }} мин чтения</div>{{ end }}
+</header>
+<div class="body">
+{{ with .Params.image }}<figure><img src="{{ . }}" alt="{{ $.Title }}"></figure>{{ end }}
 {{ .Content }}
+</div>
 </article>
 {{ end }}

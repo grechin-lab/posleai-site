@@ -10,5 +10,5 @@
 - Дата: {{ .Date.Format "2006-01-02" }}
 {{ with .Params.author }}- Автор: {{ . }}
 {{ end }}
-{{ .RawContent }}
+{{ partial "md-clean.html" . }}
 {{ end }}
