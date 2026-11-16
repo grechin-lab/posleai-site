@@ -42,7 +42,7 @@ a{color:var(--accent)}
 .list li{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
 .list a{font-size:17px;font-weight:600;text-decoration:none;color:var(--fg)}.list a:hover{color:var(--accent)}
 .list p{margin:4px 0 0;color:var(--muted);font-size:14.5px}.list .meta{margin-top:4px}
-article.post{display:grid;gap:0}
+article.post{display:block;min-width:0}
 article.post>header{margin-bottom:24px;max-width:860px}
 .body>*{max-width:720px}
 .body>.wide,.body>.tiles,.body>.tbl,.body>figure{max-width:none}
@@ -51,7 +51,7 @@ blockquote{margin:20px 0;padding:12px 16px;border-left:3px solid var(--accent);b
 blockquote p{margin:0}
 code{font-family:var(--mono);font-size:.9em;background:var(--line-soft);padding:1px 5px;border-radius:4px}
 pre{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}pre code{background:none;padding:0}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:24px 0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:12px;margin:24px 0}
 .tile{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
 .tile .k{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .tile .v{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
