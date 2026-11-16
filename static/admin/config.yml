@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: GITHUB_USER/posle-site
+  repo: grechin-lab/posleai-site
   branch: main
   base_url: https://posle.ai
   auth_endpoint: oauth/auth
