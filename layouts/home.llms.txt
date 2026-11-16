@@ -1,0 +1,13 @@
+# {{ site.Title }}
+
+> {{ site.Params.description }}
+
+Каждая статья доступна в чистом Markdown: добавьте `index.md` к адресу статьи. Полный текст всех статей: {{ "llms-full.txt" | absURL }}
+
+## Статьи
+{{ range (where site.RegularPages "Section" "articles").ByDate.Reverse }}
+- [{{ .Title }}]({{ .Permalink }}index.md){{ with .Description }}: {{ . }}{{ end }}
+{{- end }}
+
+## О проекте
+- [О проекте]({{ "about/" | absURL }}index.md)

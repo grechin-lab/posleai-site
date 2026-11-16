@@ -1,0 +1,14 @@
+# {{ site.Title }} — полный текст
+
+> {{ site.Params.description }}
+{{ range (where site.RegularPages "Section" "articles").ByDate.Reverse }}
+---
+
+# {{ .Title }}
+
+- URL: {{ .Permalink }}
+- Дата: {{ .Date.Format "2006-01-02" }}
+{{ with .Params.author }}- Автор: {{ . }}
+{{ end }}
+{{ .RawContent }}
+{{ end }}

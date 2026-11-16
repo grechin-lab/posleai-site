@@ -1,0 +1,8 @@
+{{ define "main" }}
+<article>
+<h1>{{ .Title }}</h1>
+{{ if eq .Section "articles" }}<div class="muted">{{ .Date.Format "02.01.2006" }}{{ with .Params.author }} · {{ . }}{{ end }}{{ with .Params.tags }} · {{ delimit . ", " }}{{ end }}</div>{{ end }}
+{{ with .Params.image }}<p><img src="{{ . }}" alt="{{ $.Title }}"></p>{{ end }}
+{{ .Content }}
+</article>
+{{ end }}

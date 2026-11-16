@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "index.xml" | absURL }}">
+<link rel="alternate" type="text/plain" title="llms.txt" href="{{ "llms.txt" | absURL }}">
+{{ with .OutputFormats.Get "markdown" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+{{ with .Params.image }}<meta property="og:image" content="{{ . | absURL }}">{{ end }}
+{{ partial "schema.html" . }}
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1d1f;--muted:#6b6b70;--line:#e6e3dc;--accent:#2f5bd3}
+@media (prefers-color-scheme:dark){:root{--bg:#141416;--fg:#ececee;--muted:#9a9aa2;--line:#2a2a2e;--accent:#7f9cff}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1rem}
+header.site{border-bottom:1px solid var(--line)}header.site .wrap{display:flex;justify-content:space-between;align-items:center;height:3.5rem}
+header.site a{color:var(--fg);text-decoration:none}.logo{font-weight:700;letter-spacing:-.01em}nav a{margin-left:1.25rem;color:var(--muted)}
+main{padding:2.5rem 0 4rem}h1{font-size:2rem;line-height:1.2;letter-spacing:-.02em;margin:0 0 .75rem}
+a{color:var(--accent)}.muted{color:var(--muted);font-size:.9rem}
+.list{list-style:none;padding:0;margin:0}.list li{padding:1.1rem 0;border-bottom:1px solid var(--line)}
+.list a{font-size:1.15rem;font-weight:600;text-decoration:none;color:var(--fg)}.list p{margin:.3rem 0 0;color:var(--muted)}
+article img{max-width:100%;height:auto;border-radius:6px}blockquote{margin:1.5rem 0;padding-left:1rem;border-left:3px solid var(--line);color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font-size:.85rem}
+#q{width:100%;padding:.6rem .8rem;font:inherit;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);margin-bottom:1rem}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+<a class="logo" href="/">{{ site.Title }}</a>
+<nav><a href="/articles/">Статьи</a><a href="/about/">О проекте</a></nav>
+</div></header>
+<main><div class="wrap">{{ block "main" . }}{{ end }}</div></main>
+<footer><div class="wrap">© {{ now.Year }} {{ site.Title }} · <a href="/index.xml">RSS</a> · <a href="/llms.txt">llms.txt</a></div></footer>
+</body>
+</html>

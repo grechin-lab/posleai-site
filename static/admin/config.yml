@@ -1,0 +1,54 @@
+backend:
+  name: github
+  repo: GITHUB_USER/posle-site
+  branch: main
+  base_url: https://posle.ai
+  auth_endpoint: oauth/auth
+  commit_messages:
+    create: "Новая статья: {{slug}}"
+    update: "Правка: {{slug}}"
+    delete: "Удаление: {{slug}}"
+
+# Статьи сначала попадают в «Черновики» → «На проверке»; опубликовать может только владелец.
+publish_mode: editorial_workflow
+locale: ru
+
+site_url: https://posle.ai
+media_folder: static/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: articles
+    label: Статьи
+    label_singular: Статья
+    folder: content/articles
+    create: true
+    slug: "{{slug}}"
+    preview_path: "articles/{{slug}}/"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: Заголовок, name: title, widget: string }
+      - { label: "Краткое описание (1–2 предложения, видно в поиске и ИИ)", name: description, widget: text }
+      - { label: Дата, name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ" }
+      - { label: Автор, name: author, widget: string, required: false }
+      - { label: Теги, name: tags, widget: list, required: false }
+      - { label: Обложка, name: image, widget: image, required: false }
+      - { label: Текст, name: body, widget: markdown }
+  - name: pages
+    label: Страницы
+    files:
+      - label: Главная
+        name: home
+        file: content/_index.md
+        fields:
+          - { label: Заголовок, name: title, widget: string }
+          - { label: Описание, name: description, widget: text }
+          - { label: Текст, name: body, widget: markdown }
+      - label: О проекте
+        name: about
+        file: content/about.md
+        fields:
+          - { label: Заголовок, name: title, widget: string }
+          - { label: Описание, name: description, widget: text }
+          - { label: Адрес, name: url, widget: hidden, default: "/about/" }
+          - { label: Текст, name: body, widget: markdown }

@@ -1,0 +1,9 @@
+{{- $org := dict "@type" "Organization" "name" site.Params.organization "url" site.BaseURL -}}
+{{- if .IsPage -}}
+{{- $author := dict "@type" "Person" "name" (.Params.author | default site.Params.organization) -}}
+{{- $d := dict "@context" "https://schema.org" "@type" "Article" "headline" .Title "description" (.Description | default .Summary | plainify) "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00") "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00") "author" $author "publisher" $org "mainEntityOfPage" .Permalink "inLanguage" "ru" "keywords" (delimit (.Params.tags | default slice) ", ") -}}
+{{- with .Params.image }}{{ $d = merge $d (dict "image" (. | absURL)) }}{{ end -}}
+<script type="application/ld+json">{{ $d | jsonify | safeJS }}</script>
+{{- else -}}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "WebSite" "name" site.Title "url" site.BaseURL "inLanguage" "ru" "publisher" $org | jsonify | safeJS }}</script>
+{{- end -}}

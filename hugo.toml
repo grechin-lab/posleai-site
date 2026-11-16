@@ -1,0 +1,40 @@
+baseURL = "https://posle.ai/"
+languageCode = "ru"
+defaultContentLanguage = "ru"
+title = "posle.ai"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "posle.ai — статьи и материалы."
+  organization = "posle.ai"
+
+[mediaTypes."text/markdown"]
+  suffixes = ["md"]
+
+[outputFormats.markdown]
+  mediaType = "text/markdown"
+  baseName = "index"
+  isPlainText = true
+  permalinkable = false
+
+[outputFormats.llms]
+  mediaType = "text/plain"
+  baseName = "llms"
+  isPlainText = true
+
+[outputFormats.llmsfull]
+  mediaType = "text/plain"
+  baseName = "llms-full"
+  isPlainText = true
+
+[outputs]
+  home = ["html", "rss", "llms", "llmsfull"]
+  section = ["html", "rss"]
+  page = ["html", "markdown"]
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+[sitemap]
+  changeFreq = "weekly"
