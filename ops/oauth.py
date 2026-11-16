@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Копия на сервере: /usr/local/lib/posle-oauth.py. Правки здесь на сервер сами НЕ попадают.
 """Мини-сервер входа через GitHub для Decap CMS (только стандартная библиотека).
 Слушает 127.0.0.1:8787, Caddy проксирует на него /oauth/*.
 Секреты берёт из окружения: GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET (файл /etc/posle-oauth.env)."""
