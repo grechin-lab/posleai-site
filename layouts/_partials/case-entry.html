@@ -1,0 +1,6 @@
+<div class="ent">
+<span class="m">{{ .Params.company | default "Кейс AliExpress СНГ" }}{{ with .Params.area }}, {{ . }}{{ end }}</span>
+<a class="t" href="{{ .RelPermalink }}">{{ .Params.short_title | default .Title }}</a>
+{{ with .Description }}<p>{{ . }}</p>{{ end }}
+{{ with .Params.metric }}<span class="k"><b>{{ . }}</b> {{ $.Params.metric_label }}</span>{{ end }}
+</div>

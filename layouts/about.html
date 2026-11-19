@@ -1,0 +1,11 @@
+{{ define "main" }}
+{{- /* «Об авторе». Включается, когда у content/about.md снят черновик (draft: false) */ -}}
+<div class="ab">
+{{ with .Params.photo }}<img src="{{ . | relURL }}" alt="{{ $.Params.name | default site.Params.author.name }}" style="width:120px;height:120px;flex:0 0 120px;border-radius:50%;object-fit:cover">{{ end }}
+<div>
+<h1>{{ .Params.name | default .Title }}</h1>
+{{ with .Params.role }}<p class="role">{{ . }}</p>{{ end }}
+</div>
+</div>
+<article class="art">{{ .Content }}</article>
+{{ end }}

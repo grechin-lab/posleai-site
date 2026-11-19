@@ -1,0 +1,3 @@
+<div class="bar"><div class="bl"><span>{{ .Get "label" }}</span><b>{{ .Get "value" }}</b></div><div class="tr">
+{{- with .Get "from" }}<div class="fl rg" style="width:{{ $.Get "pct" }}%"></div><div class="fl" style="width:{{ . }}%"></div>{{ else }}<div class="fl" style="width:{{ $.Get "pct" }}%"></div>{{ end -}}
+</div></div>

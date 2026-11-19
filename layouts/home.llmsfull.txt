@@ -1,7 +1,7 @@
 # {{ site.Title }} — полный текст
 
 > {{ site.Params.description }}
-{{ range (where site.RegularPages "Section" "articles").ByDate.Reverse }}
+{{ range (where site.RegularPages "Section" "in" (slice "articles" "cases")).ByDate.Reverse }}
 ---
 
 # {{ .Title }}
@@ -10,5 +10,7 @@
 - Дата: {{ .Date.Format "2006-01-02" }}
 {{ with .Params.author }}- Автор: {{ . }}
 {{ end }}
-{{ partial "md-clean.html" . }}
+{{ with .Params.lead }}{{ . }}
+
+{{ end }}{{ partial "md-clean.html" . }}
 {{ end }}

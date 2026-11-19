@@ -1,0 +1,10 @@
+{{- /* Столбики сравнения.
+{{< bars title="Сравнение" caption="Подпись" >}}
+{{< bar label="Инвестиции в AI" value="$10 млрд" pct="100" >}}
+{{< bar label="Экономия на сокращениях" value="$3–5 млрд в год" pct="50" from="30" >}}
+{{< /bars >}}  pct — длина полосы в %, from — начало светлого диапазона */ -}}
+<figure class="bars">
+{{ with .Get "title" }}<p class="fh">{{ . }}</p>{{ end }}
+{{ .Inner }}
+{{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

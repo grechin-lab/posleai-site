@@ -1,0 +1,15 @@
+{{- /* Айсберг из трёх этапов (заметка про Skolkovo).
+{{< iceberg title="Три этапа..." caption="Над водой..." >}}
+Less money | снижение издержек | уже реальность
+More money | рост дохода с той же бизнес-модели | многие подступаются
+New money | новые бизнес-модели | единицы первопроходцев
+{{< /iceberg >}} Первая строка над водой, остальные под водой. */ -}}
+<figure class="ice"{{ with .Get "title" }} aria-label="{{ . }}"{{ end }}>
+{{ with .Get "title" }}<p class="fh">{{ . }}</p>{{ end }}
+{{- $rows := split (trim .Inner "\n ") "\n" -}}
+{{- $n := len $rows -}}
+{{- range $i, $r := $rows }}{{ $c := split $r "|" }}
+<div class="ir{{ if gt $i 0 }} w{{ end }}{{ if eq $i (sub $n 1) }} last{{ end }}"><div class="il"><b>{{ trim (index $c 0) " " }}</b><span>{{ trim (index $c 1) " " }}</span></div><div class="is"><div class="sh sh{{ add $i 1 }}"></div></div><div class="ist">{{ trim (index $c 2) " " }}</div></div>
+{{- end }}
+{{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

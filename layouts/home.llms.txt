@@ -2,12 +2,28 @@
 
 > {{ site.Params.description }}
 
-Каждая статья доступна в чистом Markdown: добавьте `index.md` к адресу статьи. Полный текст всех статей: {{ "llms-full.txt" | absURL }}
+{{ with site.Params.llmsAbout }}{{ . }}
 
-## Статьи
+{{ end -}}
+Каждый материал доступен в чистом Markdown: добавьте `index.md` к адресу. Полный текст всех материалов: {{ "llms-full.txt" | absURL }}
+
+## Материалы
 {{ range (where site.RegularPages "Section" "articles").ByDate.Reverse }}
 - [{{ .Title }}]({{ .Permalink }}index.md){{ with .Description }}: {{ . }}{{ end }}
 {{- end }}
-
-## О проекте
-- [О проекте]({{ "about/" | absURL }}index.md)
+{{ with where site.RegularPages "Section" "cases" }}
+## Кейсы
+{{ range .ByWeight }}
+- [{{ .Title }}]({{ .Permalink }}index.md){{ with .Description }}: {{ . }}{{ end }}
+{{- end }}
+{{ end }}
+{{ with (site.GetPage "/talks").RegularPages }}
+## Выступления и публикации
+{{ range .ByDate.Reverse }}{{ $t := . }}
+- {{ with .Params.link }}[{{ $t.Title }}]({{ . }}){{ else }}{{ $t.Title }}{{ end }}{{ with .Params.note }}: {{ . }}{{ end }}
+{{- end }}
+{{ end }}
+{{ with site.GetPage "/about" }}{{ if not .Draft }}
+## Об авторе
+- [{{ .Title }}]({{ .Permalink }}index.md)
+{{ end }}{{ end }}

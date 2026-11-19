@@ -5,11 +5,11 @@ backend:
   base_url: https://posle.ai
   auth_endpoint: oauth/auth
   commit_messages:
-    create: "Новая статья: {{slug}}"
-    update: "Правка: {{slug}}"
-    delete: "Удаление: {{slug}}"
+    create: "Новый материал: {{collection}} / {{slug}}"
+    update: "Правка: {{collection}} / {{slug}}"
+    delete: "Удаление: {{collection}} / {{slug}}"
 
-# Статьи сначала попадают в «Черновики» → «На проверке»; опубликовать может только владелец.
+# Материалы сначала попадают в «Черновики» → «На проверке»; опубликовать может только владелец.
 publish_mode: editorial_workflow
 locale: ru
 
@@ -18,22 +18,104 @@ media_folder: static/images/uploads
 public_folder: /images/uploads
 
 collections:
+  # ——— Материалы: подход, посты из LinkedIn, разборы ———
   - name: articles
-    label: Статьи
-    label_singular: Статья
+    label: Материалы
+    label_singular: Материал
     folder: content/articles
     create: true
     slug: "{{slug}}"
     preview_path: "articles/{{slug}}/"
     sortable_fields: ["date", "title"]
+    summary: "{{rubric}} · {{date | date('DD.MM.YYYY')}} · {{title}}"
     fields:
       - { label: Заголовок, name: title, widget: string }
-      - { label: "Краткое описание (1–2 предложения, видно в поиске и ИИ)", name: description, widget: text }
+      - { label: "Краткое описание (1–2 предложения, видно в списке, поиске и ИИ)", name: description, widget: text }
       - { label: Дата, name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ" }
+      - label: Тип
+        name: rubric
+        widget: select
+        options: ["Пост", "Подход", "Разбор"]
+        default: "Пост"
+      - { label: "Контекст для списка (например: по итогам ПМЭФ)", name: context, widget: string, required: false }
+      - { label: "Ссылка на пост в LinkedIn", name: linkedin, widget: string, required: false, hint: "Если заполнено, под заголовком будет «Текст поста LinkedIn» со ссылкой" }
+      - { label: "Закрепить первым (главный текст)", name: pinned, widget: boolean, default: false, required: false }
+      - { label: "Фото под заголовком", name: photo, widget: image, required: false }
+      - { label: "Подпись к фото", name: photo_caption, widget: string, required: false }
+      - { label: "Описание фото для незрячих", name: photo_alt, widget: string, required: false }
+      - { label: "Лид (крупный первый абзац)", name: lead, widget: text, required: false }
       - { label: Автор, name: author, widget: string, required: false }
       - { label: Теги, name: tags, widget: list, required: false }
-      - { label: Обложка, name: image, widget: image, required: false }
-      - { label: Текст, name: body, widget: markdown }
+      - { label: "Обложка (для соцсетей, на сайте не показывается)", name: image, widget: image, required: false }
+      - label: "По теме (ссылки внизу)"
+        name: related
+        widget: list
+        required: false
+        fields:
+          - { label: Название, name: title, widget: string }
+          - { label: "Ссылка", name: url, widget: string }
+          - { label: "Пояснение", name: note, widget: string, required: false }
+      - { label: Текст, name: body, widget: markdown, hint: "Вынос цифры: {{< pull \"×100\" >}}пояснение{{< /pull >}}. Фото с подписью: {{< photo src=\"/images/uploads/файл.jpg\" caption=\"Подпись\" >}}" }
+
+  # ——— Кейсы ———
+  - name: cases
+    label: Кейсы
+    label_singular: Кейс
+    folder: content/cases
+    create: true
+    slug: "{{slug}}"
+    preview_path: "cases/{{slug}}/"
+    summary: "{{weight}} · {{title}}"
+    fields:
+      - { label: Заголовок страницы, name: title, widget: string }
+      - { label: "Короткое название для списка", name: short_title, widget: string, required: false }
+      - { label: "Описание для списка (1–2 предложения)", name: description, widget: text }
+      - { label: Дата, name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ" }
+      - { label: "Порядок в списке (меньше — выше)", name: weight, widget: number, default: 10 }
+      - { label: Компания, name: company, widget: string, default: "Кейс AliExpress СНГ" }
+      - { label: "Направление (клиентский сервис, маркетинг…)", name: area, widget: string, required: false }
+      - { label: "Цифра (×20, +25%)", name: metric, widget: string, required: false }
+      - { label: "Подпись к цифре в списке", name: metric_label, widget: string, required: false }
+      - { label: "Подпись к цифре на странице кейса", name: metric_note, widget: string, required: false }
+      - { label: Лид, name: lead, widget: text, required: false }
+      - { label: Процесс, name: process, widget: string, required: false }
+      - { label: Что отдали ИИ, name: gave, widget: string, required: false }
+      - { label: Как проверяют, name: check, widget: string, required: false }
+      - { label: Квадрант матрицы, name: quadrant, widget: select, required: false, options: ["Автоматизация со шлюзом", "Статистическая проверка", "Экзоскелет", "Остаётся за людьми"] }
+      - { label: "Источник (можно ссылкой в markdown)", name: source, widget: string, required: false }
+      - { label: "Текст (Задача, Что отдали ИИ, Как проверяют, Результат, Чему учит кейс)", name: body, widget: markdown }
+
+  # ——— Выступления и публикации (на главной, по годам) ———
+  - name: talks
+    label: Выступления и публикации
+    label_singular: Выступление или публикация
+    folder: content/talks
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    summary: "{{date | date('MM.YYYY')}} · {{title}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: "Площадка, издание, месяц (строка под названием)", name: note, widget: string, hint: "Например: ПМЭФ, «Коммерсантъ», июнь" }
+      - { label: "Дата (год группирует список, по дате сортировка)", name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ" }
+      - { label: Ссылка, name: link, widget: string, required: false }
+
+  # ——— Мероприятия (анонс на главной; прошедшие скрываются сами) ———
+  - name: events
+    label: Мероприятия
+    label_singular: Мероприятие
+    folder: content/events
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Название (для админки)", name: title, widget: string }
+      - { label: "Дата и время мероприятия", name: start, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ" }
+      - { label: Город, name: place, widget: string, required: false }
+      - { label: "Текст анонса (одна-две фразы)", name: text, widget: text }
+      - { label: Ссылка на регистрацию, name: link, widget: string, required: false }
+      - { label: Текст ссылки, name: link_label, widget: string, default: "Зарегистрироваться" }
+
+  # ——— Страницы ———
   - name: pages
     label: Страницы
     files:
@@ -41,14 +123,33 @@ collections:
         name: home
         file: content/_index.md
         fields:
+          - { label: "Заголовок (вкладка браузера и поиск)", name: title, widget: string }
+          - { label: "Главная фраза (крупно вверху)", name: lead, widget: string }
+          - { label: "Строка под ней", name: description, widget: text }
+      - label: Материалы (страница списка)
+        name: articles_index
+        file: content/articles/_index.md
+        fields:
           - { label: Заголовок, name: title, widget: string }
-          - { label: Описание, name: description, widget: text }
-          - { label: Текст, name: body, widget: markdown }
-      - label: О проекте
+          - { label: Подзаголовок, name: lead, widget: text }
+          - { label: Описание для поиска, name: description, widget: text }
+      - label: Кейсы (страница списка)
+        name: cases_index
+        file: content/cases/_index.md
+        fields:
+          - { label: Заголовок, name: title, widget: string }
+          - { label: Подзаголовок, name: lead, widget: text }
+          - { label: Описание для поиска, name: description, widget: text }
+      - label: Об авторе
         name: about
         file: content/about.md
         fields:
           - { label: Заголовок, name: title, widget: string }
+          - { label: Имя, name: name, widget: string, required: false }
+          - { label: Должность, name: role, widget: string, required: false }
           - { label: Описание, name: description, widget: text }
+          - { label: Фото, name: photo, widget: image, required: false }
+          - { label: "Черновик (не показывать на сайте)", name: draft, widget: boolean, default: false, required: false }
           - { label: Адрес, name: url, widget: hidden, default: "/about/" }
+          - { label: Макет, name: layout, widget: hidden, default: "about" }
           - { label: Текст, name: body, widget: markdown }

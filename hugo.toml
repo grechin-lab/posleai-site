@@ -5,9 +5,39 @@ title = "posle.ai"
 enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
+[pagination]
+  pagerSize = 30          # материалов на одной странице «Материалов»
+
 [params]
-  description = "posle.ai — статьи и материалы."
+  description = "Материалы Сергея Гречина, CEO AliExpress СНГ, о том, как пересобрать бизнес под ИИ и проверить, что это работает."
   organization = "posle.ai"
+  homeLatest = 3          # сколько последних материалов показывать на главной
+  llmsAbout = "Сайт Сергея Гречина, CEO AliExpress СНГ. Главный текст — подход Verification First: кратный эффект от ИИ возникает там, где результат можно проверить быстро, дёшево и независимо от исполнителя."
+  [params.author]
+    name = "Сергей Гречин"
+    jobTitle = "CEO AliExpress СНГ"
+    worksFor = "AliExpress СНГ"
+    linkedin = "https://ru.linkedin.com/in/sergey-grechin"
+    page = "/about/"
+    sameAs = ["https://ru.linkedin.com/in/sergey-grechin"]
+
+# Меню в шапке. «Кейсы» и «Об авторе» включить, когда разделы будут готовы (убрать # в начале строк).
+[[menus.main]]
+  name = "Материалы"
+  pageRef = "/articles"
+  weight = 10
+# [[menus.main]]
+#   name = "Кейсы"
+#   pageRef = "/cases"
+#   weight = 20
+[[menus.main]]
+  name = "Публикации и мероприятия"
+  url = "/#talks"
+  weight = 30
+# [[menus.main]]
+#   name = "Об авторе"
+#   pageRef = "/about"
+#   weight = 40
 
 [mediaTypes."text/markdown"]
   suffixes = ["md"]
@@ -33,8 +63,14 @@ disableKinds = ["taxonomy", "term"]
   section = ["html", "rss"]
   page = ["html", "markdown"]
 
+# HTML-вставки внутри текста (матрицы в Verification First, таблица в посте про GenAI).
+# Писать в репозиторий может только редакция через PR, поэтому это безопасно.
 [markup.goldmark.renderer]
-  unsafe = false
+  unsafe = true
+
+[markup.goldmark.extensions.typographer]
+  leftDoubleQuote = "«"
+  rightDoubleQuote = "»"
 
 [sitemap]
   changeFreq = "weekly"

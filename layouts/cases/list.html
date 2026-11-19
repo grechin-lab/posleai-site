@@ -1,0 +1,10 @@
+{{ define "main" }}
+<article class="art">
+<h1>{{ .Title }}</h1>
+{{ with .Params.lead | default .Description }}<p class="lead">{{ . }}</p>{{ end }}
+{{ .Content }}
+<section style="margin-top:36px">
+{{ range .RegularPages.ByWeight }}{{ partial "case-entry.html" . }}{{ end }}
+</section>
+</article>
+{{ end }}

@@ -1,0 +1,13 @@
+{{- /* Строка списка материалов: тип, дата, контекст, заголовок, описание */ -}}
+{{- $p := . -}}
+<div class="ent{{ if .Params.pinned }} pin{{ end }}">
+<span class="m">
+{{- if .Params.pinned -}}
+<b>{{ .Params.rubric | default "Подход" }},</b> {{ partial "reading.html" . }}
+{{- else -}}
+{{ .Params.rubric | default "Пост" }}, {{ partial "date-ru.html" (dict "d" .Date) }}{{ with .Params.context }}, {{ . }}{{ end }}
+{{- end -}}
+</span>
+<a class="t" href="{{ .RelPermalink }}">{{ .Title }}</a>
+{{ with .Description }}<p>{{ . }}</p>{{ end }}
+</div>

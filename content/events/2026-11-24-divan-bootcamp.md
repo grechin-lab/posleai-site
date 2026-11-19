@@ -1,0 +1,8 @@
+---
+title: "Закрытая встреча и AI Bootcamp с Divan.ru"
+start: "2026-11-24T18:00:00+03:00"
+place: "Москва"
+text: "Закрытая встреча и AI Bootcamp: Антон Макаров, CEO Divan.ru, расскажет про ИИ-трансформацию Divan.ru, затем хакатон. Особняк «МЕСТО», 40 мест."
+link: "https://forms.gle/LDZt4WvfuyodidZq9"
+link_label: "Зарегистрироваться"
+---

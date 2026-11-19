@@ -1,0 +1,16 @@
+{{ define "main" }}
+<article class="art">
+<h1>{{ .Title }}</h1>
+<p class="meta"><span style="font-size:14px">
+{{- with .Params.linkedin -}}
+<a href="{{ . }}" target="_blank" rel="noopener">Текст поста LinkedIn</a>, {{ partial "date-ru.html" (dict "d" $.Date) }}
+{{- else -}}
+{{ .Params.author | default site.Params.author.name }}, {{ partial "date-ru.html" (dict "d" .Date) }}{{ if .Params.pinned }}, {{ partial "reading.html" . }}{{ end }}
+{{- end -}}
+</span></p>
+{{ with .Params.photo }}<figure class="ph"><img src="{{ . | relURL }}" alt="{{ $.Params.photo_alt }}">{{ with $.Params.photo_caption }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>{{ end }}
+{{ with .Params.lead }}<p class="lead">{{ . | markdownify }}</p>{{ end }}
+{{ .Content }}
+{{ partial "related.html" . }}
+</article>
+{{ end }}

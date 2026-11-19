@@ -1,0 +1,7 @@
+{{ if gt .TotalPages 1 }}
+<nav class="pager" aria-label="Страницы">
+<span>{{ with .Prev }}<a href="{{ .URL }}">Новее</a>{{ end }}</span>
+<span>{{ .PageNumber }} из {{ .TotalPages }}</span>
+<span>{{ with .Next }}<a href="{{ .URL }}">Раньше</a>{{ end }}</span>
+</nav>
+{{ end }}

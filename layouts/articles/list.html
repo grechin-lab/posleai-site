@@ -1,0 +1,18 @@
+{{ define "main" }}
+<article class="art">
+<h1>{{ .Title }}</h1>
+{{ with .Params.lead | default .Description }}<p class="lead">{{ . }}</p>{{ end }}
+{{ .Content }}
+{{- $all := .RegularPages }}
+<section style="margin-top:36px">
+{{- range where $all "Params.pinned" true }}{{ partial "entry.html" . }}{{ end }}
+</section>
+{{- $rest := where $all "Params.pinned" "!=" true }}
+{{- $pager := .Paginate ($rest.ByDate.Reverse) }}
+{{- range $pager.Pages.GroupByDate "2006" }}
+<h2 class="yh">{{ .Key }}</h2>
+<section>{{ range .Pages }}{{ partial "entry.html" . }}{{ end }}</section>
+{{- end }}
+{{ partial "pager.html" $pager }}
+</article>
+{{ end }}

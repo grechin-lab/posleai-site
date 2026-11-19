@@ -1,0 +1,2 @@
+{{- /* Вынос цифры. {{< pull "×100" >}}дешевле обработка одного обращения{{< /pull >}} */ -}}
+<aside class="pull"><p class="pn">{{ .Get 0 | default (.Get "n") }}</p><p class="pt">{{ .Inner | markdownify }}</p></aside>

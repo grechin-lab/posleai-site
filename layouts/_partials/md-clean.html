@@ -1,8 +1,13 @@
 {{- $c := .RawContent -}}
 {{- $c = replaceRE `\{\{<\s*embed\s+src="/?([^"]+)"[^>]*>\}\}` (printf "Интерактивный отчёт: %s$1" site.BaseURL) $c -}}
 {{- $c = replaceRE `\{\{<\s*chart\s+title="([^"]*)"[^>]*>\}\}` "**$1:**" $c -}}
+{{- $c = replaceRE `\{\{<\s*pull\s+"([^"]*)"\s*>\}\}(.*?)\{\{<\s*/\s*pull\s*>\}\}` "**$1** — $2" $c -}}
+{{- $c = replaceRE `\{\{<\s*photo\s+src="([^"]*)"(?:\s+alt="([^"]*)")?(?:\s+caption="([^"]*)")?\s*>\}\}` "![$2]($1) $3" $c -}}
+{{- $c = replaceRE `\{\{<\s*bars\s+title="([^"]*)"[^>]*>\}\}` "**$1:**" $c -}}
+{{- $c = replaceRE `\{\{<\s*bar\s+label="([^"]*)"\s+value="([^"]*)"[^>]*>\}\}` "- $1: $2" $c -}}
+{{- $c = replaceRE `\{\{<\s*iceberg\s+title="([^"]*)"[^>]*>\}\}` "**$1:**" $c -}}
 {{- $c = replaceRE `\{\{<\s*(tiles|note)\s*>\}\}` "" $c -}}
-{{- $c = replaceRE `\{\{<\s*/\s*(tiles|chart|note)\s*>\}\}` "" $c -}}
+{{- $c = replaceRE `\{\{<\s*/\s*(tiles|chart|note|bars|iceberg)\s*>\}\}` "" $c -}}
 {{- $c = replaceRE `(?m)^([^|\n#>-][^|\n]*?)\s*\|\s*([^|\n]+?)\s*\|\s*([^|\n]+?)\s*$` "- $1: $2 ($3)" $c -}}
 {{- $c = replaceRE `(?m)^([^|\n#>-][^|\n]*?)\s*\|\s*([^|\n]+?)\s*$` "- $1: $2" $c -}}
 {{- $c = replaceRE `\]\(/` (printf "](%s" site.BaseURL) $c -}}
