@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{- $arts := where site.RegularPages "Section" "articles" -}}
-<p class="lead">{{ .Params.lead | default .Title }}</p>
-<p class="by">{{ .Description }}{{ with site.GetPage "/about" }}{{ if and (not .Draft) .Params.name }} <a href="{{ .RelPermalink }}">Об авторе</a>{{ end }}{{ end }}</p>
+<h1 class="lead">{{ .Params.lead | default .Title }}</h1>
+<p class="by">{{ .Params.byline | default .Description }}{{ with site.GetPage "/about" }}{{ if and (not .Draft) .Params.name }} <a href="{{ .RelPermalink }}">Об авторе</a>{{ end }}{{ end }}</p>
 
 {{- /* Ближайшее мероприятие: из раздела «Мероприятия», если дата ещё не прошла */ -}}
 {{- $upcoming := slice -}}

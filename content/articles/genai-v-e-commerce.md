@@ -1,5 +1,6 @@
 ---
 title: "GenAI в e-commerce: цифры из полевых экспериментов и наш опыт в AliExpress"
+seo_title: "GenAI в e-commerce: эксперименты и опыт AliExpress"
 description: "Что показали эксперименты Columbia Business School на кросс-бордерном маркетплейсе и что получилось у нас: споры, push-уведомления, названия товаров."
 date: "2026-02-23T10:00:00+03:00"
 rubric: "Пост"
