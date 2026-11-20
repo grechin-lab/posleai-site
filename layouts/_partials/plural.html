@@ -1,0 +1,6 @@
+{{- /* dict "n" 5 "forms" (slice "минута" "минуты" "минут") */ -}}
+{{- $n := int .n -}}{{- $f := .forms -}}
+{{- $m10 := mod $n 10 -}}{{- $m100 := mod $n 100 -}}
+{{- if and (eq $m10 1) (ne $m100 11) -}}{{ index $f 0 }}
+{{- else if and (ge $m10 2) (le $m10 4) (or (lt $m100 12) (gt $m100 14)) -}}{{ index $f 1 }}
+{{- else -}}{{ index $f 2 }}{{- end -}}

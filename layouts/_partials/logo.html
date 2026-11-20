@@ -1,0 +1,2 @@
+{{- /* Логотип posle ai: SVG в цвет текста, без блеска */ -}}
+{{ with resources.Get "logo.svg" }}{{ .Content | replaceRE `<svg ` `<svg aria-hidden="true" ` | safeHTML }}{{ end }}

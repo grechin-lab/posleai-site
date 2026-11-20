@@ -1,0 +1,18 @@
+{{ define "main" }}
+<article class="art">
+<p class="meta" style="margin-bottom:6px"><span style="font-size:14px"><a href="{{ .Parent.RelPermalink }}">Все кейсы</a></span></p>
+<h1>{{ .Title }}</h1>
+<p class="meta"><span style="font-size:14px">{{ .Params.company | default "Кейс AliExpress СНГ" }}{{ with .Params.area }}, {{ . }}{{ end }}</span></p>
+{{ with .Params.lead }}<p class="lead">{{ . | markdownify }}</p>{{ end }}
+{{ with .Params.metric }}<aside class="pull"><p class="pn">{{ . }}</p><p class="pt">{{ $.Params.metric_note | default $.Params.metric_label }}</p></aside>{{ end }}
+{{- $f := slice -}}
+{{ with .Params.process }}{{ $f = $f | append (dict "k" "Процесс" "v" .) }}{{ end }}
+{{ with .Params.gave }}{{ $f = $f | append (dict "k" "Что отдали ИИ" "v" .) }}{{ end }}
+{{ with .Params.check }}{{ $f = $f | append (dict "k" "Как проверяют" "v" .) }}{{ end }}
+{{ with .Params.quadrant }}{{ $f = $f | append (dict "k" "Квадрант" "v" .) }}{{ end }}
+{{ with $f }}<ul class="facts">{{ range . }}<li><span>{{ .k }}</span>{{ .v }}</li>{{ end }}</ul>{{ end }}
+{{ .Content }}
+{{ with .Params.source }}<p class="src">Источник: {{ . | markdownify }}</p>{{ end }}
+{{ partial "related.html" . }}
+</article>
+{{ end }}

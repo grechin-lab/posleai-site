@@ -1,0 +1,2 @@
+{{- /* {{< photo src="/images/uploads/pmef.jpg" alt="..." caption="..." >}} */ -}}
+<figure class="ph"><img src="{{ .Get "src" | relURL }}" alt="{{ .Get "alt" }}" loading="lazy">{{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}</figure>

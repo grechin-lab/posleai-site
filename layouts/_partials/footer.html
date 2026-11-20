@@ -1,0 +1,9 @@
+<footer class="foot">
+<span class="logo" role="img" aria-label="{{ site.Title }}">{{ partial "logo.html" . }}</span>
+<span class="ln">
+{{- with site.GetPage "/about" }}{{ if not .Draft }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}{{ end }}
+{{- with site.Params.author.linkedin }}<a href="{{ . }}" target="_blank" rel="noopener">LinkedIn</a>{{ end }}
+<a href="{{ "llms.txt" | relURL }}">llms.txt</a>
+{{- with site.Home.OutputFormats.Get "rss" }}<a href="{{ .RelPermalink }}">RSS</a>{{ end }}
+</span>
+</footer>

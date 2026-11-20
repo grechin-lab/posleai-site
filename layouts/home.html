@@ -1,10 +1,39 @@
 {{ define "main" }}
-<h1>{{ site.Title }}</h1>{{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
-{{ .Content }}
-<h2>Последние статьи</h2>
-<ul class="list">
-{{ range first 10 (where site.RegularPages "Section" "articles").ByDate.Reverse }}
-<li><a href="{{ .RelPermalink }}">{{ .Title }}</a><div class="meta">{{ .Date.Format "02.01.2006" }}{{ with .Params.author }} · {{ . }}{{ end }}</div>{{ with .Description }}<p>{{ . }}</p>{{ end }}</li>
-{{ else }}<li class="muted">Статей пока нет.</li>{{ end }}
-</ul>
+{{- $arts := where site.RegularPages "Section" "articles" -}}
+<p class="lead">{{ .Params.lead | default .Title }}</p>
+<p class="by">{{ .Description }}{{ with site.GetPage "/about" }}{{ if and (not .Draft) .Params.name }} <a href="{{ .RelPermalink }}">Об авторе</a>{{ end }}{{ end }}</p>
+
+{{- /* Ближайшее мероприятие: из раздела «Мероприятия», если дата ещё не прошла */ -}}
+{{- $upcoming := slice -}}
+{{- range $e := (site.GetPage "/events").RegularPages }}{{ with $e.Params.start }}{{ if ge (time .) (now.AddDate 0 0 -1) }}{{ $upcoming = $upcoming | append $e }}{{ end }}{{ end }}{{ end -}}
+{{- with index (sort $upcoming "Params.start") 0 }}
+<div class="note">
+<p class="d">{{ partial "date-ru.html" (dict "d" (time .Params.start) "year" false) }}{{ with .Params.place }}, {{ . }}{{ end }}</p>
+<p>{{ .Params.text | default .Title }}{{ $e := . }}{{ with .Params.link }} <a href="{{ . }}" target="_blank" rel="noopener">{{ $e.Params.link_label | default "Зарегистрироваться" }}</a>{{ end }}</p>
+</div>
+{{- end }}
+
+<section class="sec" id="essays" style="border-top:0">
+<h2>Материалы</h2>
+{{- range where $arts "Params.pinned" true }}{{ partial "entry.html" . }}{{ end }}
+{{- $rest := where $arts "Params.pinned" "!=" true }}
+{{- range first (site.Params.homeLatest | default 3) $rest.ByDate.Reverse }}{{ partial "entry.html" . }}{{ end }}
+{{- if gt (len $arts) (add (site.Params.homeLatest | default 3) 1) }}
+<p class="all"><a href="{{ "articles/" | relURL }}">Все материалы</a></p>
+{{- end }}
+</section>
+
+{{- $talks := (site.GetPage "/talks").RegularPages }}
+{{- with $talks }}
+<section class="sec" id="talks">
+<h2>Публикации и мероприятия</h2>
+{{- range .GroupByDate "2006" }}
+<div class="yr"><span class="y">{{ .Key }}</span><ul>
+{{- range .Pages.ByDate.Reverse }}
+{{ $t := . }}<li>{{ with .Params.link }}<a href="{{ . }}" target="_blank" rel="noopener">{{ $t.Title }}</a>{{ else }}{{ $t.Title }}{{ end }}{{ with .Params.note }}<span>{{ . }}</span>{{ end }}</li>
+{{- end }}
+</ul></div>
+{{- end }}
+</section>
+{{- end }}
 {{ end }}

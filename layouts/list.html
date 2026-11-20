@@ -1,13 +1,8 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>{{ with .Description }}<p class="lead">{{ . }}</p>{{ end }}
+<article class="art">
+<h1>{{ .Title }}</h1>
+{{ with .Params.lead | default .Description }}<p class="lead">{{ . }}</p>{{ end }}
 {{ .Content }}
-<input id="q" type="search" placeholder="Поиск по статьям" aria-label="Поиск по статьям">
-<ul class="list" id="items">
-{{ range .Pages.ByDate.Reverse }}
-<li data-s="{{ lower (printf "%s %s %s" .Title .Description (delimit (.Params.tags | default slice) " ")) }}"><a href="{{ .RelPermalink }}">{{ .Title }}</a><div class="meta">{{ .Date.Format "02.01.2006" }}{{ with .Params.author }} · {{ . }}{{ end }}</div>{{ with .Description }}<p>{{ . }}</p>{{ end }}</li>
-{{ else }}<li class="muted">Статей пока нет.</li>{{ end }}
-</ul>
-<script>
-document.getElementById('q').addEventListener('input',function(e){var v=e.target.value.toLowerCase();document.querySelectorAll('#items li[data-s]').forEach(function(li){li.hidden=v&&li.dataset.s.indexOf(v)<0})});
-</script>
+<section style="margin-top:36px">{{ range .RegularPages.ByDate.Reverse }}{{ partial "entry.html" . }}{{ end }}</section>
+</article>
 {{ end }}

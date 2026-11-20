@@ -1,0 +1,8 @@
+{{ with .Params.related }}
+<section class="rel"><h2>{{ $.Params.related_title | default "По теме" }}</h2><ul>
+{{ range . }}
+{{- $url := .url -}}{{- $ext := hasPrefix $url "http" -}}
+<li><a href="{{ $url | relURL }}"{{ if $ext }} target="_blank" rel="noopener"{{ end }}>{{ .title }}</a>{{ with .note }}<span>{{ . }}</span>{{ end }}</li>
+{{ end }}
+</ul></section>
+{{ end }}
