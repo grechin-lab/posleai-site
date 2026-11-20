@@ -25,5 +25,5 @@
 {{ end }}
 {{ with site.GetPage "/about" }}{{ if not .Draft }}
 ## Об авторе
-- [{{ .Title }}]({{ .Permalink }}index.md)
+- [{{ .Params.name | default .Title }}: биография и опыт]({{ .Permalink }}index.md){{ with .Params.role }}: {{ . }}{{ end }}
 {{ end }}{{ end }}

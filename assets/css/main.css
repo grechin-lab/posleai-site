@@ -200,3 +200,5 @@ figure.wide iframe{border:1px solid var(--line)!important;border-radius:8px;back
 .tbl{overflow-x:auto;margin:28px 0}
 .tbl table{margin:0}
 .art td.n,.art th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.about-text p{margin:0 0 16px}.about-text p:last-child{margin-bottom:0}
+@media (min-width:561px){.sec .kv li{grid-template-columns:132px minmax(0,1fr)}}

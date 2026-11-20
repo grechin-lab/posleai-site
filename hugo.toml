@@ -11,6 +11,8 @@ disableKinds = ["taxonomy", "term"]
 [params]
   description = "Материалы Сергея Гречина, CEO AliExpress СНГ, о том, как пересобрать бизнес под ИИ и проверить, что это работает."
   organization = "posle.ai"
+  homeTitle = "Сергей Гречин: как пересобрать бизнес под ИИ"
+  ogImage = "/images/og-default.png"
   homeLatest = 3          # сколько последних материалов показывать на главной
   llmsAbout = "Сайт Сергея Гречина, CEO AliExpress СНГ. Главный текст — подход Verification First: кратный эффект от ИИ возникает там, где результат можно проверить быстро, дёшево и независимо от исполнителя."
   [params.author]
@@ -19,9 +21,13 @@ disableKinds = ["taxonomy", "term"]
     worksFor = "AliExpress СНГ"
     linkedin = "https://ru.linkedin.com/in/sergey-grechin"
     page = "/about/"
+    image = "/images/sergey-grechin.jpg"
+    description = "CEO AliExpress СНГ. Специализируется на трансформации бизнеса под ИИ с измеримым эффектом."
+    alumniOf = ["МГУ имени М. В. Ломоносова", "Московская школа управления СКОЛКОВО", "Hong Kong University of Science and Technology"]
+    knowsAbout = ["искусственный интеллект в бизнесе", "трансформация бизнеса под ИИ", "e-commerce", "ритейл", "Verification First"]
     sameAs = ["https://ru.linkedin.com/in/sergey-grechin"]
 
-# Меню в шапке. «Кейсы» и «Об авторе» включить, когда разделы будут готовы (убрать # в начале строк).
+# Меню в шапке. «Кейсы» включить, когда раздел будет готов (убрать # в начале строк).
 [[menus.main]]
   name = "Материалы"
   pageRef = "/articles"
@@ -34,10 +40,10 @@ disableKinds = ["taxonomy", "term"]
   name = "Публикации и мероприятия"
   url = "/#talks"
   weight = 30
-# [[menus.main]]
-#   name = "Об авторе"
-#   pageRef = "/about"
-#   weight = 40
+[[menus.main]]
+  name = "Об авторе"
+  pageRef = "/about"
+  weight = 40
 
 [mediaTypes."text/markdown"]
   suffixes = ["md"]

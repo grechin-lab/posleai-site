@@ -30,7 +30,8 @@ collections:
     summary: "{{rubric}} · {{date | date('DD.MM.YYYY')}} · {{title}}"
     fields:
       - { label: Заголовок, name: title, widget: string }
-      - { label: "Краткое описание (1–2 предложения, видно в списке, поиске и ИИ)", name: description, widget: text }
+      - { label: "Заголовок для поиска (до 60 знаков, если основной длиннее)", name: seo_title, widget: string, required: false }
+      - { label: "Краткое описание (1–2 предложения, до 160 знаков: видно в списке, поиске и ИИ)", name: description, widget: text }
       - { label: Дата, name: date, widget: datetime, format: "YYYY-MM-DDTHH:mm:ssZ" }
       - label: Тип
         name: rubric
@@ -144,11 +145,26 @@ collections:
         name: about
         file: content/about.md
         fields:
-          - { label: Заголовок, name: title, widget: string }
-          - { label: Имя, name: name, widget: string, required: false }
-          - { label: Должность, name: role, widget: string, required: false }
-          - { label: Описание, name: description, widget: text }
+          - { label: "Заголовок в меню", name: title, widget: string }
+          - { label: "Заголовок для поиска", name: seo_title, widget: string, required: false }
+          - { label: Имя, name: name, widget: string }
+          - { label: "Подзаголовок под именем", name: role, widget: text }
+          - { label: "Описание для поиска (до 160 знаков)", name: description, widget: text }
           - { label: Фото, name: photo, widget: image, required: false }
+          - label: Опыт
+            name: experience
+            widget: list
+            fields:
+              - { label: Годы, name: years, widget: string }
+              - { label: Компания, name: org, widget: string }
+              - { label: Описание, name: text, widget: text, required: false }
+          - label: Образование
+            name: education
+            widget: list
+            fields:
+              - { label: Годы, name: years, widget: string }
+              - { label: Учебное заведение, name: org, widget: string }
+              - { label: Описание, name: text, widget: text, required: false }
           - { label: "Черновик (не показывать на сайте)", name: draft, widget: boolean, default: false, required: false }
           - { label: Адрес, name: url, widget: hidden, default: "/about/" }
           - { label: Макет, name: layout, widget: hidden, default: "about" }

@@ -1,11 +1,24 @@
 {{ define "main" }}
-{{- /* «Об авторе». Включается, когда у content/about.md снят черновик (draft: false) */ -}}
 <div class="ab">
-{{ with .Params.photo }}<img src="{{ . | relURL }}" alt="{{ $.Params.name | default site.Params.author.name }}" style="width:120px;height:120px;flex:0 0 120px;border-radius:50%;object-fit:cover">{{ end }}
+{{ with .Params.photo }}<img src="{{ . | relURL }}" alt="{{ $.Params.name | default site.Params.author.name }}" width="120" height="120" style="width:120px;height:120px;flex:0 0 120px;border-radius:50%;object-fit:cover">{{ end }}
 <div>
 <h1>{{ .Params.name | default .Title }}</h1>
 {{ with .Params.role }}<p class="role">{{ . }}</p>{{ end }}
 </div>
 </div>
-<article class="art">{{ .Content }}</article>
+<section class="sec about-text" style="border-top:0;padding-top:0">
+{{ .Content }}
+</section>
+{{ with .Params.experience }}
+<section class="sec">
+<h2>Опыт</h2>
+<ul class="kv">{{ range . }}<li><b>{{ .years | replaceRE " " " " }}</b><div><p>{{ .org }}</p>{{ with .text }}<p class="cd">{{ . }}</p>{{ end }}</div></li>{{ end }}</ul>
+</section>
+{{ end }}
+{{ with .Params.education }}
+<section class="sec">
+<h2>Образование</h2>
+<ul class="kv">{{ range . }}<li><b>{{ .years | replaceRE " " " " }}</b><div><p>{{ .org }}</p>{{ with .text }}<p class="cd">{{ . }}</p>{{ end }}</div></li>{{ end }}</ul>
+</section>
+{{ end }}
 {{ end }}
