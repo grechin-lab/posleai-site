@@ -106,7 +106,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em;margin:0}
 .refs h2{font-size:18px;margin:0 0 14px}
 .refs ol{padding-left:22px;margin:0}
 .refs li{margin:0 0 8px}
-.pull{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:baseline;margin:32px 0;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pull{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center;margin:32px 0;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .art .pull p{margin:0}
 .art .pull .pn{font-size:44px;line-height:1;font-weight:600;letter-spacing:-.02em;color:var(--accent);font-variant-numeric:tabular-nums}
 .art .pull .pt{color:var(--muted);font-size:16px;line-height:1.45}
