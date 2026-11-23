@@ -13,5 +13,11 @@ if [ "$OLD" != "$NEW" ] || [ ! -f /srv/posle/index.html ] || [ "${1:-}" = "--for
   rm -rf /var/tmp/posle-build/out
   hugo --minify --quiet -d /var/tmp/posle-build/out
   rsync -a --delete /var/tmp/posle-build/out/ /srv/posle/
+  # IndexNow: сообщить Bing и Яндексу, что сайт обновился (ключ — static/182fc47aa8e448758027a001fb947a24.txt)
+  KEY=182fc47aa8e448758027a001fb947a24
+  URLS=$(grep -o '<loc>[^<]*</loc>' /srv/posle/sitemap.xml | sed 's/<[^>]*>//g; s/.*/"&"/' | paste -sd, - || true)
+  curl -s -o /dev/null -m 20 -X POST https://api.indexnow.org/indexnow \
+    -H 'Content-Type: application/json; charset=utf-8' \
+    -d "{\"host\":\"posle.ai\",\"key\":\"$KEY\",\"keyLocation\":\"https://posle.ai/$KEY.txt\",\"urlList\":[$URLS]}" || true
   echo "built $NEW"
 fi
